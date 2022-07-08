@@ -6,7 +6,7 @@ import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
+import Vuelidate from 'vuelidate'
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
@@ -14,6 +14,9 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 Vue.use(VueToast);
 Vue.use(VueAxios, axios)
+Vue.use(Vuelidate)
+
+
 Vue.config.productionTip = false;
 
 new Vue({
