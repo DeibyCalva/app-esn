@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli build/dev-main.js",
-    "start": "vue-cli main.js",   
+    "dev": "node build/dev-server.js",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "node build/build.js",
+    "lint": "vue-cli-service lint",
+    "start": "node main.js" 
   },
   "dependencies": {
     "assert": "^2.0.0",
