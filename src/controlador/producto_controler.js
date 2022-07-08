@@ -3,21 +3,19 @@ import axios from "axios";
 
 export default {
     lista_producto(call) {
-        axios.get(path.lista_producto)
-            .then((response) => {
-                call({
-                    next: true,
-                    mensaje: '',
-                    data: response.data,
-                })
+        axios.get(path.lista_producto).then((response) => {
+            call({
+                next: true,
+                mensaje: '',
+                data: response.data,
             })
-            .catch((error) => {
-                var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
-                call({
-                    next: false,
-                    mensaje: mensaje,
-                })
-            });
+        }).catch((error) => {
+            var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
+            call({
+                next: false,
+                mensaje: mensaje,
+            })
+        });
     },
     guardar_producto(nombre, indicador, medidaPrevencion, recomendacion, call) {
         var producto = {
@@ -26,46 +24,58 @@ export default {
             medidaPrevencion: medidaPrevencion,
             recomendacion: recomendacion,
         }
-        axios.post(path.guardar_producto,producto)
-            .then((response) => {
-                call({
-                    next: true,
-                    mensaje: '',
-                    data: response.data,
-                })
+        axios.post(path.guardar_producto, producto).then((response) => {
+            call({
+                next: true,
+                mensaje: '',
+                data: response.data,
             })
-            .catch((error) => {
-                var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
-                call({
-                    next: false,
-                    mensaje: mensaje,
-                })
-            });
+        }).catch((error) => {
+            var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
+            call({
+                next: false,
+                mensaje: mensaje,
+            })
+        });
     },
-    
-    editar_producto(id,nombre, indicador, medidaPrevencion, recomendacion, call) {
+
+    editar_producto(id, nombre, indicador, medidaPrevencion, recomendacion, call) {
         var producto = {
-            _id:id,
+            _id: id,
             nombre: nombre,
             indicador: indicador,
             medidaPrevencion: medidaPrevencion,
             recomendacion: recomendacion,
         }
-        console.log(producto)
-        axios.put(path.editar_producto,producto)
-            .then((response) => {
-                call({
-                    next: true,
-                    mensaje: '',
-                    data: response.data,
-                })
+        var url = path.editar_producto + "/" + id;
+        axios.put(url, producto).then((response) => {
+            call({
+                next: true,
+                mensaje: '',
+                data: response.data,
             })
-            .catch((error) => {
-                var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
-                call({
-                    next: false,
-                    mensaje: mensaje,
-                })
-            });
+        }).catch((error) => {
+            var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
+            call({
+                next: false,
+                mensaje: mensaje,
+            })
+        });
+    },
+    eliminar_producto(id, call) {
+        var url = path.eliminar_producto + "/" + id;
+        axios.delete(url).then((response) => {
+            call({
+                next: true,
+                mensaje: '',
+                data: response.data,
+            })
+        }).catch((error) => {
+            var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
+            call({
+                next: false,
+                mensaje: mensaje,
+            })
+        });
     }
 }

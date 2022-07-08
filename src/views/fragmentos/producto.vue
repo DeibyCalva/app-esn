@@ -33,6 +33,15 @@
                                             <v-list-item-title v-text="'Editar'"></v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
+                                    <!-- Boton para eliminar producto  -->
+                                    <v-list-item @click="confirmar_eliminar_producto(item._id)">
+                                        <v-list-item-icon>
+                                            <v-icon v-text="'mdi-delete'" :color="'red'"></v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-content>
+                                            <v-list-item-title v-text="'Eliminar'"></v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
                                 </v-list-item-group>
                             </v-list>
                         </v-menu>
@@ -58,18 +67,19 @@
                             </v-col>
                             <v-col cols="12" md="6">
                                 <v-text-field outlined label="Indicador de etiqueta" v-model="indicador" required
-                                :error-messages="indicador_errors" @input="$v.indicador.$touch()"
+                                    :error-messages="indicador_errors" @input="$v.indicador.$touch()"
                                     @blur="$v.indicador.$touch()">
                                 </v-text-field>
                             </v-col>
                             <v-col cols="12" md="12">
-                                <v-textarea outlined label="Medida de prevención" v-model="medidaPrevencion" required :error-messages="medidaPrevencion_errors" @input="$v.medidaPrevencion.$touch()"
+                                <v-textarea outlined label="Medida de prevención" v-model="medidaPrevencion" required
+                                    :error-messages="medidaPrevencion_errors" @input="$v.medidaPrevencion.$touch()"
                                     @blur="$v.medidaPrevencion.$touch()">
                                 </v-textarea>
                             </v-col>
                             <v-col cols="12" md="12">
                                 <v-textarea outlined label="Recomendación" v-model="recomendacion" required
-                                :error-messages="recomendacion_errors" @input="$v.recomendacion.$touch()"
+                                    :error-messages="recomendacion_errors" @input="$v.recomendacion.$touch()"
                                     @blur="$v.recomendacion.$touch()">
                                 </v-textarea>
                             </v-col>
@@ -87,15 +97,33 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!-- Dialogo para confirmar eliminar producto  -->
+        <v-dialog v-model="dialog_producto_eliminar" persistent max-width="600px">
+
+            <v-card>
+                <v-card-title>
+                    <span class="text-h5">¿Deseas eliminar el producto?</span>
+                </v-card-title>
+                <v-card-text>Recuerda que una vez eliminado no podrás recuperar la información</v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog_producto_eliminar = false">
+                        Cerrar
+                    </v-btn>
+                    <v-btn color="blue darken-1" text @click="eliminar_producto()">
+                        Confirmar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
     </section>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-    required,
-} from "vuelidate/lib/validators";
-
+import { required } from "vuelidate/lib/validators";
 import controlador from "../../controlador/producto_controler";
 
 export default {
@@ -106,12 +134,13 @@ export default {
         indicador: { required },
         medidaPrevencion: { required },
         recomendacion: { required },
-
     },
     data: () => ({
-        op : true,
+        op: true,
         search: '',
         dialog_producto: false,
+        dialog_producto_eliminar: false,
+        id_producto_eliminar: "",
         headers: [
             {
                 text: 'Nombre',
@@ -130,8 +159,8 @@ export default {
         indicador: "",
         medidaPrevencion: "",
         recomendacion: "",
-       // id:"",
-        id:"",
+        // id:"",
+        id: "",
 
     }),
     computed: {
@@ -165,7 +194,8 @@ export default {
             this.desserts = [];
             controlador.lista_producto((response) => {
                 if (response.next == true) {
-                    this.desserts = response.data.productos;
+                    this.desserts = response?.data?.productos ?? [];
+                    this.desserts = this.desserts.reverse();
                 } else {
                     this.$toast.open({
                         message: response.mensaje,
@@ -178,7 +208,6 @@ export default {
             });
         },
         async guardar_producto() {
-            this.desserts = [];
             controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
                 if (response.next == true) {
                     this.dialog_producto = false;
@@ -202,8 +231,7 @@ export default {
             });
         },
         async editar_producto() {
-            this.desserts = [];
-            controlador.editar_producto(this.id,this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
+            controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
                 if (response.next == true) {
                     this.dialog_producto = false;
                     this.listar_producto();
@@ -249,12 +277,40 @@ export default {
             if (!this.$v.$invalid) {
                 if (this.op == true) {
                     this.guardar_producto()
-                }else{
+                } else {
                     this.editar_producto();
                 }
             }
 
-        }
+        },
+        confirmar_eliminar_producto(id) {
+            this.id_producto_eliminar = id;
+            this.dialog_producto_eliminar = true;
+        },
+        async eliminar_producto() {
+            controlador.eliminar_producto(this.id_producto_eliminar, (response) => {
+                if (response.next == true) {
+                    this.dialog_producto_eliminar = false;
+                    this.listar_producto();
+                    this.$toast.open({
+                        message: 'Producto eliminado correctamente',
+                        type: "success",
+                        duration: 5000,
+                        position: "top-right",
+                        pauseOnHover: true,
+                    });
+                } else {
+                    this.dialog_producto_eliminar = false;
+                    this.$toast.open({
+                        message: response.mensaje,
+                        type: "error",
+                        duration: 5000,
+                        position: "top-right",
+                        pauseOnHover: true,
+                    });
+                }
+            });
+        },
     },
     mounted() {
         this.listar_producto();

@@ -4,12 +4,12 @@ import Cookies from "js-cookie";
 export default {
     auth : false,
     setUsuario(usuario) {
-        Cookies.set("usuario", usuario);
+        Cookies.set("usuario", JSON.stringify(usuario));
 
     },
     getUsuario() {
         var usuario = Cookies.get("usuario");
-        return usuario;
+        return JSON.parse(usuario);
     },
 
     cerrar_Sesion() {

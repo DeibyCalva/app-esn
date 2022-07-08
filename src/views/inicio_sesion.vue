@@ -41,7 +41,7 @@
   </v-app>
 </template>
  <script>
-import controlador from "../controlador/inicio_sesion_controlador";
+import controlador from "../controlador/usuario_controlador";
 import cookie from "../cookie/inicio_sesion";
 export default {
   name: "Inicio_sesion",
