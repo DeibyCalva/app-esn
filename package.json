@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli build/build.js",
     "lint": "vue-cli-service lint",
-    "start": "node main.js" 
+    "start": "vue-cli main.js" 
   },
   "dependencies": {
     "assert": "^2.0.0",
