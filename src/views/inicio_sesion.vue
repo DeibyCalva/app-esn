@@ -3,13 +3,13 @@
 
     <v-img src="@/assets/images/background.png" container style="align-items: center"
       gradient="rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)">
-      <v-row justify="center" class="text-center" style="margin-top: -100px" align="center">
+      <v-row justify="center" class="text-center" style="margin-top: -10px" align="center">
         <v-col cols="12" md="4" sm="12" align-self="center" class="text-center">
           <v-container>
             <v-card elevation="26" outlined shaped tile class="header-main "  style="color: #fff"
               width="100%">
               <br><br>
-              <v-avatar style="margin-top: -200px" size="200">
+              <v-avatar style="margin-top: -200px" size="190">
 
                 <img src="@/assets/images/LogoESNutri.png" />
               </v-avatar>
