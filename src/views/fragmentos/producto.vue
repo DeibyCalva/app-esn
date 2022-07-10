@@ -83,6 +83,12 @@
                                     @blur="$v.recomendacion.$touch()">
                                 </v-textarea>
                             </v-col>
+                            <v-col cols="12" md="12">
+                                <v-img lazy-src="image.secure_url" max-height="150" max-width="250"
+                                    src="https://res.cloudinary.com/esnutri/image/upload/v1657417873/lsgu3b8nos22nng241fx.png">
+                                    </v-img>
+                            </v-col>
+
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -151,6 +157,7 @@ export default {
             { text: 'Indicador', sortable: false, value: 'indicador' },
             { text: 'Medida de prevención', sortable: false, value: 'medidaPrevencion' },
             { text: 'Recomendación', sortable: false, value: 'recomendacion' },
+            { text: 'Imagen', sortable: false, value: 'image.secure_url' },
             { text: 'Accion', sortable: false, value: 'accion' },
         ],
         desserts: [],
@@ -159,6 +166,7 @@ export default {
         indicador: "",
         medidaPrevencion: "",
         recomendacion: "",
+
         // id:"",
         id: "",
 
@@ -258,7 +266,7 @@ export default {
             this.nombre = data.nombre;
             this.indicador = data.indicador;
             this.medidaPrevencion = data.medidaPrevencion;
-            this.recomendacion = data.recomendacion
+            this.recomendacion = data.recomendacion;
             this.dialog_producto = true;
             this.op = false;
         },

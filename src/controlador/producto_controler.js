@@ -4,10 +4,12 @@ import axios from "axios";
 export default {
     lista_producto(call) {
         axios.get(path.lista_producto).then((response) => {
+            
             call({
                 next: true,
                 mensaje: '',
                 data: response.data,
+                
             })
         }).catch((error) => {
             var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
@@ -16,6 +18,7 @@ export default {
                 mensaje: mensaje,
             })
         });
+                
     },
     guardar_producto(nombre, indicador, medidaPrevencion, recomendacion, call) {
         var producto = {
