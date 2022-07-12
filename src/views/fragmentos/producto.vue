@@ -15,6 +15,17 @@
                 </v-card-title>
                 <v-data-table :headers="headers" :items="desserts" :search="search">
 
+                    <template v-slot:[`item.imagen`]="{ item }">
+                        <div style="padding: 10px;" v-if="item.image != undefined">
+                            <a :href="item.image.secure_url" data-wpel-link="external" target="_blank"
+                                rel="nofollow external noopener noreferrer">
+                                <v-img max-height="100" max-width="250" :src="item.image.secure_url">
+                                </v-img>
+                            </a>
+
+                        </div>
+                    </template>
+
                     <template v-slot:[`item.accion`]="{ item }">
                         <v-menu bottom origin="center center" transition="scale-transition">
                             <template v-slot:activator="{ on, attrs }">
@@ -83,11 +94,14 @@
                                     @blur="$v.recomendacion.$touch()">
                                 </v-textarea>
                             </v-col>
+
                             <v-col cols="12" md="12">
-                                <v-img lazy-src="image.secure_url" max-height="150" max-width="250"
-                                    src="https://res.cloudinary.com/esnutri/image/upload/v1657417873/lsgu3b8nos22nng241fx.png">
-                                    </v-img>
+                                <v-file-input outlined label="Ingrese imagen" v-model="imagen" required
+                                    :error-messages="imagen_errors" @input="$v.imagen.$touch()"
+                                    @blur="$v.imagen.$touch()"></v-file-input>
                             </v-col>
+
+
 
                         </v-row>
                     </v-container>
@@ -140,6 +154,7 @@ export default {
         indicador: { required },
         medidaPrevencion: { required },
         recomendacion: { required },
+        imagen: { required },
     },
     data: () => ({
         op: true,
@@ -157,7 +172,7 @@ export default {
             { text: 'Indicador', sortable: false, value: 'indicador' },
             { text: 'Medida de prevención', sortable: false, value: 'medidaPrevencion' },
             { text: 'Recomendación', sortable: false, value: 'recomendacion' },
-            { text: 'Imagen', sortable: false, value: 'image.secure_url' },
+            { text: 'Imagen', sortable: false, value: 'imagen' },
             { text: 'Accion', sortable: false, value: 'accion' },
         ],
         desserts: [],
@@ -166,6 +181,7 @@ export default {
         indicador: "",
         medidaPrevencion: "",
         recomendacion: "",
+        imagen: null,
 
         // id:"",
         id: "",
@@ -196,6 +212,12 @@ export default {
             !this.$v.recomendacion.required && errors.push("Este campo es obligatorio.");
             return errors;
         },
+        imagen_errors() {
+            const errors = [];
+            if (!this.$v.imagen.$dirty) return errors;
+            !this.$v.imagen.required && errors.push("Este campo es obligatorio.");
+            return errors;
+        },
     },
     methods: {
         async listar_producto() {
@@ -216,7 +238,7 @@ export default {
             });
         },
         async guardar_producto() {
-            controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
+            controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
                 if (response.next == true) {
                     this.dialog_producto = false;
                     this.listar_producto();
@@ -239,7 +261,7 @@ export default {
             });
         },
         async editar_producto() {
-            controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
+            controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
                 if (response.next == true) {
                     this.dialog_producto = false;
                     this.listar_producto();
