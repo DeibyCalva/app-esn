@@ -6,8 +6,7 @@
       <v-row justify="center" class="text-center" style="margin-top: -10px" align="center">
         <v-col cols="12" md="4" sm="12" align-self="center" class="text-center">
           <v-container>
-            <v-card elevation="26" outlined shaped tile class="header-main "  style="color: #fff"
-              width="100%">
+            <v-card elevation="26" outlined shaped tile class="header-main " style="color: #fff" width="100%">
               <br><br>
               <v-avatar style="margin-top: -200px" size="190">
 
@@ -27,7 +26,7 @@
                   <v-overlay :value="overlay" color="primary" fixed>
                     <v-progress-circular :size="70" :width="7" color="white" indeterminate></v-progress-circular>
                   </v-overlay>
-                  <v-btn tile color="success" x-large @click="iniciar_sesion()"  width="100%">
+                  <v-btn tile color="success" x-large @click="iniciar_sesion()" width="100%">
                     <v-icon left> mdi-export </v-icon>
                     Ingresar
                   </v-btn>

@@ -266,7 +266,7 @@ export default {
                     this.dialog_producto = false;
                     this.listar_producto();
                     this.$toast.open({
-                        message: 'Guardado correctamente',
+                        message: 'Producto actualizado correctamente',
                         type: "success",
                         duration: 5000,
                         position: "top-right",
