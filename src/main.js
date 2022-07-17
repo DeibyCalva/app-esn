@@ -8,6 +8,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuelidate from 'vuelidate'
 
+
+import VueImg from 'v-img';
+ 
+Vue.use(VueImg);
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 

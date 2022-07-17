@@ -85,9 +85,9 @@ export default {
         async buscar_usuario() {
             var cookieUsuario = cookie.getUsuario();
             controlador.buscar_usuario(cookieUsuario._id, (response) => {
-                if (response.next == true) {
-                    this.nombre = response.data.nombre;
-                    this.correo = response.data.correo;
+                if (response.tipo == "success") {
+                    this.nombre = response.data.usuario.nombre;
+                    this.correo = response.data.usuario.correo;
                 } else {
                     this.$toast.open({
                         message: response.mensaje,
@@ -110,9 +110,9 @@ export default {
                 data.correo = this.correo;
                 if ((this.password ?? "") != "") data.password = this.password;
                 controlador.editar_usuario(data, (response) => {
-                    if (response.next == true) {
+                    if (response.tipo == "success") {
                         this.$toast.open({
-                            message: 'Usuario Editado',
+                            message: response.mensaje,
                             type: "success",
                             duration: 5000,
                             position: "top-right",

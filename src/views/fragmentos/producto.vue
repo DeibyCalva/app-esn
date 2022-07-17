@@ -15,6 +15,17 @@
                 </v-card-title>
                 <v-data-table :headers="headers" :items="desserts" :search="search">
 
+                    <template v-slot:[`item.imagen`]="{ item }">
+                        <div style="padding: 10px;" v-if="item.image != undefined">
+                            <a :href="item.image.secure_url" data-wpel-link="external" target="_blank"
+                                rel="nofollow external noopener noreferrer">
+                                <v-img max-height="100" max-width="250" :src="item.image.secure_url">
+                                </v-img>
+                            </a>
+
+                        </div>
+                    </template>
+
                     <template v-slot:[`item.accion`]="{ item }">
                         <v-menu bottom origin="center center" transition="scale-transition">
                             <template v-slot:activator="{ on, attrs }">
@@ -83,6 +94,15 @@
                                     @blur="$v.recomendacion.$touch()">
                                 </v-textarea>
                             </v-col>
+
+                            <v-col cols="12" md="12">
+                                <v-file-input outlined label="Ingrese imagen" v-model="imagen" required
+                                    :error-messages="imagen_errors" @input="$v.imagen.$touch()"
+                                    @blur="$v.imagen.$touch()"></v-file-input>
+                            </v-col>
+
+
+
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -134,6 +154,7 @@ export default {
         indicador: { required },
         medidaPrevencion: { required },
         recomendacion: { required },
+        imagen: { required },
     },
     data: () => ({
         op: true,
@@ -151,6 +172,7 @@ export default {
             { text: 'Indicador', sortable: false, value: 'indicador' },
             { text: 'Medida de prevención', sortable: false, value: 'medidaPrevencion' },
             { text: 'Recomendación', sortable: false, value: 'recomendacion' },
+            { text: 'Imagen', sortable: false, value: 'imagen' },
             { text: 'Accion', sortable: false, value: 'accion' },
         ],
         desserts: [],
@@ -159,6 +181,11 @@ export default {
         indicador: "",
         medidaPrevencion: "",
         recomendacion: "",
+        imagen: null,
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
         // id:"",
         id: "",
 
@@ -188,12 +215,18 @@ export default {
             !this.$v.recomendacion.required && errors.push("Este campo es obligatorio.");
             return errors;
         },
+        imagen_errors() {
+            const errors = [];
+            if (!this.$v.imagen.$dirty) return errors;
+            !this.$v.imagen.required && errors.push("Este campo es obligatorio.");
+            return errors;
+        },
     },
     methods: {
         async listar_producto() {
             this.desserts = [];
             controlador.lista_producto((response) => {
-                if (response.next == true) {
+                if (response.tipo == "success") {
                     this.desserts = response?.data?.productos ?? [];
                     this.desserts = this.desserts.reverse();
                 } else {
@@ -208,8 +241,12 @@ export default {
             });
         },
         async guardar_producto() {
-            controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
+            controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
+<<<<<<< HEAD
+                if (response.tipo == "success") {
+=======
                 if (response.next == true) {
+>>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
                     this.dialog_producto = false;
                     this.listar_producto();
                     this.$toast.open({
@@ -231,12 +268,16 @@ export default {
             });
         },
         async editar_producto() {
-            controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, (response) => {
+            controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
+<<<<<<< HEAD
+                if (response.tipo == "success") {
+=======
                 if (response.next == true) {
+>>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
                     this.dialog_producto = false;
                     this.listar_producto();
                     this.$toast.open({
-                        message: 'Guardado correctamente',
+                        message: 'Producto actualizado correctamente',
                         type: "success",
                         duration: 5000,
                         position: "top-right",
@@ -258,7 +299,7 @@ export default {
             this.nombre = data.nombre;
             this.indicador = data.indicador;
             this.medidaPrevencion = data.medidaPrevencion;
-            this.recomendacion = data.recomendacion
+            this.recomendacion = data.recomendacion;
             this.dialog_producto = true;
             this.op = false;
         },
@@ -289,7 +330,7 @@ export default {
         },
         async eliminar_producto() {
             controlador.eliminar_producto(this.id_producto_eliminar, (response) => {
-                if (response.next == true) {
+                if (response.tipo == "success") {
                     this.dialog_producto_eliminar = false;
                     this.listar_producto();
                     this.$toast.open({
