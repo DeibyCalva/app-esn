@@ -182,10 +182,6 @@ export default {
         medidaPrevencion: "",
         recomendacion: "",
         imagen: null,
-<<<<<<< HEAD
-=======
-
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
         // id:"",
         id: "",
 
@@ -242,11 +238,7 @@ export default {
         },
         async guardar_producto() {
             controlador.guardar_producto(this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
-<<<<<<< HEAD
                 if (response.tipo == "success") {
-=======
-                if (response.next == true) {
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
                     this.dialog_producto = false;
                     this.listar_producto();
                     this.$toast.open({
@@ -269,11 +261,7 @@ export default {
         },
         async editar_producto() {
             controlador.editar_producto(this.id, this.nombre, this.indicador, this.medidaPrevencion, this.recomendacion, this.imagen, (response) => {
-<<<<<<< HEAD
                 if (response.tipo == "success") {
-=======
-                if (response.next == true) {
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
                     this.dialog_producto = false;
                     this.listar_producto();
                     this.$toast.open({

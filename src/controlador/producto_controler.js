@@ -4,17 +4,7 @@ import axios from "axios";
 export default {
     lista_producto(call) {
         axios.get(path.lista_producto).then((response) => {
-<<<<<<< HEAD
             call(response.data);
-=======
-
-            call({
-                next: true,
-                mensaje: '',
-                data: response.data,
-
-            })
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
         }).catch((error) => {
             var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
             call({
@@ -39,15 +29,7 @@ export default {
             data: producto,
             headers: { "Content-Type": "multipart/form-data" },
         }).then((response) => {
-<<<<<<< HEAD
             call(response.data);
-=======
-            call({
-                next: true,
-                mensaje: '',
-                data: response.data,
-            })
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
         }).catch((error) => {
             var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
             call({
@@ -72,15 +54,7 @@ export default {
             data: producto,
             headers: { "Content-Type": "multipart/form-data" },
         }).then((response) => {
-<<<<<<< HEAD
             call(response.data);
-=======
-            call({
-                next: true,
-                mensaje: '',
-                data: response.data,
-            })
->>>>>>> 9413bbea86bde736dcb9d518e8790b4a771eb961
         }).catch((error) => {
             var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
             call({
