@@ -11,7 +11,7 @@ export default {
         axios.post(path.inicio_sesion, usuario)
 
             .then((response) => {
-                call(response.data);
+                call(response.data.usuario);
             })
             .catch((error) => {
                 var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
@@ -27,7 +27,7 @@ export default {
         var url = path.usuario_id + `/${id}`;
         axios.get(url)
             .then((response) => {
-                call(response.data.usuario);
+                call(response.data);
             })
             .catch((error) => {
                 var mensaje = error?.response?.data?.mensaje ?? "Error de conexión";
