@@ -84,6 +84,7 @@ export default {
     methods: {
         async buscar_usuario() {
             var cookieUsuario = cookie.getUsuario();
+            console.log(cookieUsuario);
             controlador.buscar_usuario(cookieUsuario._id, (response) => {
                 if (response.tipo == "success") {
                     this.nombre = response.data.usuario.nombre;

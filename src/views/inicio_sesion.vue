@@ -54,7 +54,7 @@ export default {
     async iniciar_sesion() {
       controlador.iniciar_sesion(this.email, this.password, (response) => {
         if (response.tipo == "success") {
-          cookie.setUsuario(response.data);
+          cookie.setUsuario(response.data.usuario);
           this.$router.push({ name: 'Producto' }).catch(() => {  
           });
         } else {
