@@ -223,7 +223,7 @@ export default {
             this.desserts = [];
             controlador.lista_producto((response) => {
                 if (response.tipo == "success") {
-                    this.desserts = response?.data?.productos ?? [];
+                    this.desserts = response?.data ?? [];
                     this.desserts = this.desserts.reverse();
                 } else {
                     this.$toast.open({
